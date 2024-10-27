@@ -5,8 +5,10 @@ from scrape import parse_article
 
 def main(url):
     if url:
+        print("Scraping Data")
         article = parse_article(url)
-        return print(predictions.get_prediction(article))
+        print("Predicting Sentiment")
+        return print("Model recommendation is to " + predictions.get_prediction(article)[1])
 
 
 if __name__ == '__main__':

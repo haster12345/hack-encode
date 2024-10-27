@@ -16,7 +16,7 @@ def index():
 @app.route('/data', methods=['GET'])
 def get_stock_data():
     try:
-        df = pd.read_csv('stonks.csv')
+        df = pd.read_csv('../stonks.csv')
         df['Date'] = pd.to_datetime(df['Date'])  # Convert to datetime
         original_price = df['Stock Price'].iloc[0]  # Get the first price for relative value calculation
 
