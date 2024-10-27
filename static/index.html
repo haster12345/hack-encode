@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Prices Over Time</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        #chart-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock Prices Over Time</h1>
+    <div id="chart-container">
+        <canvas id="stockChart"></canvas>
+    </div>
+
+    <script>
+    // Fetch data from Flask backend
+    fetch('/data')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Prepare data for the chart
+            const labels = data.map(item => item.Date);
+            const prices = data.map(item => item['Stock Price']);
+            const relativeValues = data.map(item => item['Relative Stock Value']);
+
+            // Get the context of the canvas element we want to select
+            const ctx = document.getElementById('stockChart').getContext('2d');
+
+            // Create the chart
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Stock Price',
+                        data: prices,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 2,
+                        fill: false,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            title: { display: true, text: 'Stock Price (USD)' }
+                        },
+                        x: {
+                            title: { display: true, text: 'Date' },
+                            ticks: {
+                                // Show only 10 ticks (dates) on the x-axis
+                                autoSkip: true,
+                                maxTicksLimit: 10,
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: { color: '#333' }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const date = context.label;
+                                    const stockPrice = context.raw;
+                                    const relativeValue = (stockPrice / prices[0]).toFixed(2);
+                                    return [`Date: ${date}`, `Stock Price: $${stockPrice.toFixed(2)}`, `Relative Value: ${relativeValue}`];
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+</body>
+</html>

@@ -1,6 +1,5 @@
 import pandas as pd
 
-
 MODEL_NAME = "BertTinySentimentMARKET-REWORK-2"
 results_map = {
     0: 'sell',
@@ -26,9 +25,10 @@ def _get_predictions_model(news_input):
 
 
 def back_test(df: pd.DataFrame, initial_cash_value=1000, predictions_engine='nillion'):
-    stock_val = df['Price'][0]
+    stock_val = df['Price'][0]  # Initialize stock value based on the first price
     cash_value = initial_cash_value - stock_val
     cheapest = float("inf")
+
     return_vals = [1]
 
     if predictions_engine == 'nillion':
@@ -43,6 +43,7 @@ def back_test(df: pd.DataFrame, initial_cash_value=1000, predictions_engine='nil
 
         price = df['Price'].iloc[i]
         prev_price = df['Price'].iloc[i - 1]
+
         stock_val *= 1 + ((price - prev_price) / prev_price)
 
         if signal == 'buy':
@@ -50,10 +51,12 @@ def back_test(df: pd.DataFrame, initial_cash_value=1000, predictions_engine='nil
             cash_value -= price  # decrease cash value by 1 share
         else:
             cheapest = min(cheapest, price)
-            net = (price - cheapest)/price  # calculate the profit/loss percentage change
-            cash_value += cheapest*net
+            net = (price - cheapest) / price  # calculate the profit/loss percentage change
+            cash_value += cheapest * net
             stock_val -= cheapest
 
-        return_vals.append((cash_value + stock_val)/initial_cash_value)
+        # Calculate the relative stock value
+        relative_stock_value = stock_val / df['Price'][0]  # Compare to initial stock price
+        return_vals.append(relative_stock_value)
 
     return return_vals

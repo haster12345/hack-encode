@@ -1,20 +1,12 @@
 from argparse import ArgumentParser
-
-import pandas as pd
-
-from predictions import back_test, get_prediction
+import predictions
 from scrape import parse_article
 
 
 def main(url):
     if url:
         article = parse_article(url)
-        return print(get_prediction(article))
-
-    else:
-        df = pd.read_csv('../stonks.csv')
-        return_val = back_test(df, predictions_engine='')
-        return return_val
+        return print(predictions.get_prediction(article))
 
 
 if __name__ == '__main__':
