@@ -10,7 +10,7 @@ Additionally, we provide a Command Line Interface (CLI) tool that allows users t
 
 This graph shows the backtested results of our algorithm, showing how our model predicts the return of stock values over time. These results can be improved over time, by training the model further, using more data, and evolving our backtesting algorithm to more accurately reflect trends.
 
-
+In order to set up the environment, check out the Nillion documentation: https://docs.nillion.com/aivm
 
 
 
