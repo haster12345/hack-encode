@@ -6,8 +6,7 @@ In this project, backtesting simulates the performance of our BERT-based modelâ€
 
 Additionally, we provide a Command Line Interface (CLI) tool that allows users to input a URL of a financial news article. Our tool, given an article, scrapes the web to generate real-time predictions (buy, sell, or hold) based on the content of the article.
 
-
-<img src="https://media.discordapp.net/attachments/419923179985960970/1300043120645374034/image.png?ex=671f6701&amp;is=671e1581&amp;hm=9c3d44ea99621ae434cbf59fd2f361eb890baaed9cdecaebad9a835c14df646d&amp;=&amp;format=webp&amp;quality=lossless&amp;width=706&amp;height=411" alt="Image"/>![image](https://github.com/user-attachments/assets/071a785f-e250-4b63-b638-ca5b602e4c1b)
+<img src="https://media.discordapp.net/attachments/419923179985960970/1300043120645374034/image.png?ex=671f6701&amp;is=671e1581&amp;hm=9c3d44ea99621ae434cbf59fd2f361eb890baaed9cdecaebad9a835c14df646d&amp;=&amp;format=webp&amp;quality=lossless&amp;width=706&amp;height=411" alt="Image"/>
 
 This graph shows the backtested results of our algorithm, showing how our model predicts the return of stock values over time. These results can be improved over time, by training the model further, using more data, and evolving our backtesting algorithm to more accurately reflect trends.
 
